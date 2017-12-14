@@ -40,11 +40,23 @@ public class CustomAdapter extends BaseAdapter {
     }
 
     public class ViewHolder {
+        Context context;
         ImageView status_pic;
         TextView plug_id;
 
+        public ViewHolder(Context context, ImageView statusPic, TextView plugId) {
+            this.context = context;
+            this.status_pic = statusPic;
+            this.plug_id = plugId;
+        }
+
         public void updateView(RowItem rowItem) {
             plug_id.setText(rowItem.getPlugId());
+            if (rowItem.getPlugState()) {
+                status_pic.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_plug_on));
+            } else {
+                status_pic.setImageDrawable(context.getResources().getDrawable(R.drawable.ic_plug_off));
+            }
 
         }
     }
@@ -56,15 +68,10 @@ public class CustomAdapter extends BaseAdapter {
         LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
         if (view == null) {
             view = mInflater.inflate(R.layout.list_item, null);
-            holder = new ViewHolder();
+            holder = new ViewHolder(context, (ImageView) view.findViewById(R.id.status_pic),
+                    (TextView) view.findViewById(R.id.plug_id));
 
-            holder.plug_id = (TextView) view.findViewById(R.id.plug_id);
-            holder.status_pic = (ImageView) view.findViewById(R.id.status_pic);
-
-            RowItem row_pos = rowItems.get(i);
-
-            holder.plug_id.setText(row_pos.getPlugId());
-            // TODO: holder.status_pic.setImageResource();
+            holder.updateView(rowItems.get(i));
 
             view.setTag(holder);
         } else {

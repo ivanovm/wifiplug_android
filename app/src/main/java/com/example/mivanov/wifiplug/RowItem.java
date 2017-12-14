@@ -28,7 +28,7 @@ public class RowItem {
         this.plugIp = plugIp;
     }
 
-    public boolean isPlugState() {
+    public boolean getPlugState() {
         return plugState;
     }
 
