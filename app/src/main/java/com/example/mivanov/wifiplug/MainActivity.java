@@ -7,6 +7,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -14,10 +17,13 @@ import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.ByteOrder;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
     private Toolbar mTopToolbar;
+    private List<RowItem> rowItems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,15 +48,35 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_favorite) {
-//            Toast.makeText(MainActivity.this, "Action clicked", Toast.LENGTH_LONG).show();
-//            TextView textView = (TextView) findViewById(R.id.textView);
-//            textView.setText(getWifiIpAddress());
+            rowItems = new ArrayList<RowItem>();
+            ListView listView;
+
+            // TODO: scan the network for available plugs
+            for (int i = 0; i < 2; i++) {
+                RowItem rowItem = new RowItem("000123", "127.0.0.1", false);
+                rowItems.add(rowItem);
+            }
+
+            listView = (ListView)findViewById(R.id.listView);
+            CustomAdapter adapter = new CustomAdapter(this, rowItems);
+            listView.setAdapter(adapter);
+
+            listView.setOnItemClickListener(this);
+
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        ListView listView = (ListView)findViewById(R.id.listView);
+        RowItem rowItem = (RowItem)((CustomAdapter)listView.getAdapter()).getItem(position);
+        // TODO: change state of plug and update the status
+//        ((CustomAdapter.ViewHolder) view.getTag()).plug_id.setText("");
+//        Toast.makeText(getApplicationContext(), "", Toast.LENGTH_SHORT).show();
     }
 
     public String getWifiIpAddress() {

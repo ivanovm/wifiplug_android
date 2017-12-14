@@ -19,6 +19,11 @@ public class CustomAdapter extends BaseAdapter {
     Context context;
     List<RowItem> rowItems;
 
+    CustomAdapter(Context context, List<RowItem> rowItems) {
+        this.context = context;
+        this.rowItems = rowItems;
+    }
+
     @Override
     public int getCount() {
         return rowItems.size();
@@ -34,9 +39,14 @@ public class CustomAdapter extends BaseAdapter {
         return rowItems.indexOf(getItem(i));
     }
 
-    private class ViewHolder {
+    public class ViewHolder {
         ImageView status_pic;
         TextView plug_id;
+
+        public void updateView(RowItem rowItem) {
+            plug_id.setText(rowItem.getPlugId());
+
+        }
     }
 
     @Override
@@ -54,15 +64,13 @@ public class CustomAdapter extends BaseAdapter {
             RowItem row_pos = rowItems.get(i);
 
             holder.plug_id.setText(row_pos.getPlugId());
-            holder.status_pic.setImageResource(); member_name.setText(row_pos.getMember_name());
-            holder.status.setText(row_pos.getStatus());
-            holder.contactType.setText(row_pos.getContactType());
+            // TODO: holder.status_pic.setImageResource();
 
-            convertView.setTag(holder);
+            view.setTag(holder);
         } else {
-            holder = (ViewHolder) convertView.getTag();
+            holder = (ViewHolder) view.getTag();
         }
 
-        return convertView;
+        return view;
     }
 }
