@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\fun\wifiplug_android\app\app.iml" filepath="C:\fun\wifiplug_android\app\app.iml" />
       <module fileurl="file://$PROJECT_DIR$/wifiplug_android.iml" filepath="$PROJECT_DIR$/wifiplug_android.iml" />
+      <module fileurl="file://C:\fun\wifiplug_android\wifiplug_android.iml" filepath="C:\fun\wifiplug_android\wifiplug_android.iml" />
     </modules>
   </component>
 </project>
